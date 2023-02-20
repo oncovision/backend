@@ -1,6 +1,5 @@
 typing
 fastapi
-codecs
 json
 pandas
 pydantic
