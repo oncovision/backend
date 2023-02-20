@@ -1,0 +1,44 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "oncobackend"
+  namespace: "default"
+  labels:
+    app: "oncobackend"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "oncobackend"
+  template:
+    metadata:
+      labels:
+        app: "oncobackend"
+    spec:
+      containers:
+      - name: "oncobackend"
+        image: "europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncobackend:latest"
+        imagePullPolicy: Always
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "oncobackend-hpa"
+  namespace: "default"
+  labels:
+    app: "oncobackend"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "oncobackend"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80

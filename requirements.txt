@@ -1,0 +1,7 @@
+typing
+fastapi
+csv
+codecs
+json
+pandas
+pydantic
