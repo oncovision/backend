@@ -1,5 +1,4 @@
 typing
 fastapi
-json
 pandas
 pydantic
