@@ -40,7 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: europe-west3-docker.pkg.dev/solution-kit-11/oncovision/frontend:${{ github.ref_name }}
+          tags: europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncobackend:${{ github.ref_name }}
 
   deploy-image:
     runs-on: ubuntu-latest
