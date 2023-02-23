@@ -8,10 +8,12 @@ import json
 import pandas as pd
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from flask_cors import CORS
+
 
 
 app = FastAPI()
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.get("/")
 def read_root():
