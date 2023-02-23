@@ -41,6 +41,8 @@ jobs:
           context: .
           push: true
           tags: europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncobackend:${{ github.ref_name }}
+          build-args: |
+            "GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
 
   deploy-image:
     runs-on: ubuntu-latest
