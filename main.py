@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import FastAPI, Response, UploadFile, File
 from fastapi import Request
 from fastapi.encoders import jsonable_encoder
+from google.cloud import bigquery
 import csv
 import codecs
 import json
@@ -50,6 +51,7 @@ def read_item(getData: str):
 @app.get("/listdataset/")
 def read_item():
     data = ["ovarian cancer","lung cancer"]
+    getCancerData()
     return {"Data sent": data}
 
 @app.get("/getStats/{datset}")
@@ -153,3 +155,17 @@ def read_ovarian_cancer_data():
     js=json.load(open('lungcancerdataset.json'))
     return json.dumps(js)
           
+
+def getCancerData():
+    client = bigquery.Client()
+    query_job = client.query(
+        """
+        SELECT * FROM `solution-kit-11.cancer_cases_dataset.lung_cancer_data` WHERE DATE(_PARTITIONTIME) < '2023-02-22' """
+    )
+    query_job.result()  # Waits for job to complete.
+    destination = query_job.destination
+    destination = client.get_table(destination)
+    print("The query data:")
+    rows = client.list_rows(destination, start_index=0, max_results=20)
+    for row in rows:
+        print("Case_ID={}, Patient_affiliation={}".format(row["Case_ID"], row["Patient_affiliation"]))
