@@ -8,12 +8,26 @@ import json
 import pandas as pd
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from flask_cors import CORS
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
 app = FastAPI()
-CORS(app, resources={r"/*": {"origins": "*"}})
+
+origins = [
+    "http://35.241.31.143",
+    "http://localhost",
+    "http://localhost:8080",
+    "*"
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def read_root():
