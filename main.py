@@ -77,6 +77,22 @@ def read_item():
             data[key] = rows
     return data
 
+@app.get("/predictpatient/{id}")
+def read_item(id: int, q: Union[str, None] = None):
+    #return {"Survival Chances": id==1}
+    data=0.1
+    if id==1:
+       data=0.6
+    elif id==2:
+        data=0.3
+    elif id==3:
+        data=0.56
+    elif id==4:
+        data=0.32        
+    else :
+        return {"Survival Chances": data}
+    return {"Survival Chances": data}
+
 @app.get("/getovariancancerdata")
 def read_item(info : Request):
     df = pd.read_csv (r'lungcancerdatasetdemo.csv')
