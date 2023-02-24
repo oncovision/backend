@@ -1,0 +1,18 @@
+Time,CTC count,Oncology Milestone
+0,54,Diagnosis of cancer 
+3,42,"Post Onco-surgery , Start of ChemoRx Cycles "
+6,16,After ChemoRx Cycle 1
+9,12,After ChemoRx Cycle 2
+12,8,After ChemoRx Cycle 3 
+15,6,After ChemoRx Cycle 4 
+18,7,After ChemoRx Cycle 5
+21,4,"After ChemoRx  Cycle 6 , End of ChemoRx Cycles "
+24,3,"Post ChemoRx , Start of Radiation Therapy "
+27,4,Post Radiation Rehabilitation 
+30,4,Post Radiation Rehabilitation 
+33,5,Post Radiation Rehabilitation 
+36,19,Suspected  Cancer Relapse 
+39,69,"Confirmed Metastatic Spread with PET scan , Start of ImmunoTherapy "
+42,29,After Immunotherapy Dose 1
+45,8,After Immunotherapy Dose 2
+48,3,After Immunotherapy Dose 3

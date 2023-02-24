@@ -1,0 +1,18 @@
+Time,CTC count,Oncology Milestone,Pathology Image,Radiology Image,RBC,WBC
+0,54,Diagnosis of cancer ,slideCaptureShot.jpeg,LungCT1.png,12.4,12.4
+3,42,"Post Onco-surgery , Start of ChemoRx Cycles ",slideCaptureShot.jpeg,LungCT1.png,13,13
+6,16,After ChemoRx Cycle 1,slideCaptureShot.jpeg,LungCT1.png,15,15
+9,12,After ChemoRx Cycle 2,slideCaptureShot.jpeg,LungCT1.png,2,2
+12,8,After ChemoRx Cycle 3 ,slideCaptureShot.jpeg,LungCT1.png,3.4,3.4
+15,6,After ChemoRx Cycle 4 ,slideCaptureShot.jpeg,LungCT1.png,56,56
+18,7,After ChemoRx Cycle 5,slideCaptureShot.jpeg,LungCT1.png,40,40
+21,4,"After ChemoRx  Cycle 6 , End of ChemoRx Cycles ",slideCaptureShot.jpeg,LungCT1.png,24,24
+24,3,"Post ChemoRx , Start of Radiation Therapy ",slideCaptureShot.jpeg,LungCT1.png,50,50
+27,4,Post Radiation Rehabilitation ,slideCaptureShot.jpeg,LungCT1.png,15,15
+30,4,Post Radiation Rehabilitation ,slideCaptureShot.jpeg,LungCT1.png,2,2
+33,5,Post Radiation Rehabilitation ,slideCaptureShot.jpeg,LungCT1.png,3.4,3.4
+36,19,Suspected  Cancer Relapse ,slideCaptureShot.jpeg,LungCT1.png,56,56
+39,69,"Confirmed Metastatic Spread with PET scan , Start of ImmunoTherapy ",slideCaptureShot.jpeg,LungCT1.png,40,40
+42,29,After Immunotherapy Dose 1,slideCaptureShot.jpeg,LungCT1.png,24,24
+45,8,After Immunotherapy Dose 2,slideCaptureShot.jpeg,LungCT1.png,50,50
+48,3,After Immunotherapy Dose 3,slideCaptureShot.jpeg,LungCT1.png,12.4,12.4

@@ -1,0 +1,5 @@
+Minimal residual disease (MRD) is typically measured in cells per milliliter (cells/mL). To calculate MRD, a sample of the patient's blood or bone marrow is taken and the number of leukaemic cells is counted. The MRD is then calculated by dividing the number of leukaemic cells by the volume of the sample (in milliliters).
+
+For example, if a sample of bone marrow contains 500 leukaemic cells and has a volume of 1 mL, the MRD would be 500 cells/mL.
+
+It is important to note that MRD is typically measured at different time points during treatment and after treatment to monitor the response to treatment and the risk of relapse. The MRD value can be used to predict the likelihood of relapse and to guide treatment decisions. A lower MRD value generally indicates a better prognosis.
