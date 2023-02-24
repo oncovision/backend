@@ -9,6 +9,7 @@ from lifelines.statistics import multivariate_logrank_test
 import streamlit.components.v1 as components
 import plotly.express as px
 import plotly.graph_objects as go
+from PIL import Image
 
 
 st.set_page_config(layout="wide")
@@ -43,7 +44,7 @@ placeholder.title("Minimal Residual Disease(MRD)  Monitoring")
 
 option = st.sidebar.radio(
     'Please select an end user profile: ',
-    ('OncoClinician','Patient', 'Bio Pharma Scientist'))
+    ('OncoClinician','Doctor', 'Bio Pharma Scientist'))
 
 st.write('You selected:', option)
 
@@ -287,7 +288,7 @@ if option == 'Bio Pharma Scientist':
         else :
                 st.write('Your uploaded File is not having Survial Curve Data')        
 
-if option == 'Patient':
+if option == 'Doctor':
     uploaded_file = st.sidebar.file_uploader("Choose a file")
     if uploaded_file is not None:
         # To read file as bytes:
@@ -440,6 +441,139 @@ if option == 'Patient':
             st.plotly_chart(fig32, theme="streamlit", use_conatiner_width=True)
             st.write(wbc_data)
 
-            #
+            #haemoglobin data
+            hm_data = df[['Time', 'Haemoglobin', 'Oncology Milestone']]
+            # st.subheader("Define a custom colorscale")
+            # df = px.data.iris()
+            x = df["Time"]
+            y = df["Haemoglobin"]
+            fig13 = px.line(
+            hm_data,
+            x="Time",
+            y="Haemoglobin",
+            text="Haemoglobin",
+            # color = "Oncology Milestone",
+            markers=True,
+            hover_data=["Haemoglobin"],
+            # color_discrete_sequence=['red']
+             color_discrete_sequence=px.colors.sequential.Inferno,
+            # labels={'x':'t', 'y':'cos(t)'}
+            )
+            fig13.update_traces(textposition="bottom right")
+            # fig.show()
+            fig23 = px.scatter(hm_data,
+            x="Time",
+            y="Haemoglobin",
+            # text="CTC count",
+            color = "Haemoglobin",
+            hover_data=["Haemoglobin"],
+            color_continuous_scale=px.colors.sequential.Viridis)
+            fig33 = go.Figure(data=fig13.data + fig23.data)
+
+            fig33.update_layout(
+            #title='<b>MRD Curve</b><br><i>(Hover over the points to see the Oncology Milestones)</i>',
+            # title='<span class="bold">MRD Curve</span><i>(Hover over the points to see the Oncology Milestones)</i>',
+            xaxis_title = "<b>Time (in Weeks)</b>",
+            yaxis_title = "<b>Haemoglobin Count (Cells/1 ml)</b>",
+            font=dict(
+                size = 18,
+                
+                )
+            )
+            st.plotly_chart(fig33, theme="streamlit", use_conatiner_width=True)
+            st.write(hm_data)
+
+            #LYM
+            lm_data = df[['Time', 'LYM', 'Oncology Milestone']]
+            # st.subheader("Define a custom colorscale")
+            # df = px.data.iris()
+            x = df["Time"]
+            y = df["LYM"]
+            fig14 = px.line(
+            lm_data,
+            x="Time",
+            y="LYM",
+            text="LYM",
+            # color = "Oncology Milestone",
+            markers=True,
+            hover_data=["LYM"],
+            # color_discrete_sequence=['red']
+             color_discrete_sequence=px.colors.sequential.Inferno,
+            # labels={'x':'t', 'y':'cos(t)'}
+            )
+            fig14.update_traces(textposition="bottom right")
+            # fig.show()
+            fig24 = px.scatter(lm_data,
+            x="Time",
+            y="LYM",
+            # text="CTC count",
+            color = "LYM",
+            hover_data=["LYM"],
+            color_continuous_scale=px.colors.sequential.Viridis)
+            fig34 = go.Figure(data=fig14.data + fig24.data)
+
+            fig34.update_layout(
+            #title='<b>MRD Curve</b><br><i>(Hover over the points to see the Oncology Milestones)</i>',
+            # title='<span class="bold">MRD Curve</span><i>(Hover over the points to see the Oncology Milestones)</i>',
+            xaxis_title = "<b>Time (in Weeks)</b>",
+            yaxis_title = "<b>LYM (Cells/1 ml)</b>",
+            font=dict(
+                size = 18,
+                
+                )
+            )
+            st.plotly_chart(fig34, theme="streamlit", use_conatiner_width=True)
+            st.write(lm_data)
+
+            #MN
+            mon_data = df[['Time', 'MON', 'Oncology Milestone']]
+            # st.subheader("Define a custom colorscale")
+            # df = px.data.iris()
+            x = df["Time"]
+            y = df["MON"]
+            fig15 = px.line(
+            mon_data,
+            x="Time",
+            y="MON",
+            text="MON",
+            # color = "Oncology Milestone",
+            markers=True,
+            hover_data=["MON"],
+            # color_discrete_sequence=['red']
+             color_discrete_sequence=px.colors.sequential.Inferno,
+            # labels={'x':'t', 'y':'cos(t)'}
+            )
+            fig15.update_traces(textposition="bottom right")
+            # fig.show()
+            fig25 = px.scatter(mon_data,
+            x="Time",
+            y="MON",
+            # text="CTC count",
+            color = "MON",
+            hover_data=["MON"],
+            color_continuous_scale=px.colors.sequential.Viridis)
+            fig35 = go.Figure(data=fig15.data + fig25.data)
+
+            fig35.update_layout(
+            #title='<b>MRD Curve</b><br><i>(Hover over the points to see the Oncology Milestones)</i>',
+            # title='<span class="bold">MRD Curve</span><i>(Hover over the points to see the Oncology Milestones)</i>',
+            xaxis_title = "<b>Time (in Weeks)</b>",
+            yaxis_title = "<b>MON (Cells/1 ml)</b>",
+            font=dict(
+                size = 18,
+                
+                )
+            )
+            st.plotly_chart(fig35, theme="streamlit", use_conatiner_width=True)
+            st.write(mon_data)
+
+
+            #radiologydata
+            image1 = Image.open('radiologicalImages/'+df['Radiology Image'].head(1).values[0])
+            st.image(image1, caption='Radiology Image')
+
+            #histologydata
+            image2 = Image.open('pathologicalImages/'+df['Pathology Image'].head(1).values[0])
+            st.image(image2, caption='Pathology Image')
         else :
             st.write('Your uploaded File is not having Integrated Data')
