@@ -10,6 +10,7 @@ import streamlit.components.v1 as components
 import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
+import numpy as np
 
 
 st.set_page_config(layout="wide")
@@ -285,6 +286,13 @@ if option == 'Bio Pharma Scientist':
                 col1,col2=st.columns(2)
                 col1.pyplot(ax.get_figure())
                 st.write(data)
+        
+            df1 = pd.DataFrame(np.random.randn(10, 2) / [50, 50] + [37.76, -122.4],columns=['lat', 'lon'])
+            st.map(df1)
+
+            df2 = pd.DataFrame(np.random.randn(20, 2) / [50, 50] + [12.9107966, 77.6760177],columns=['lat', 'lon'])
+            st.map(df2)
+
         else :
                 st.write('Your uploaded File is not having Survial Curve Data')        
 
