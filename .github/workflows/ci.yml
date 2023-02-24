@@ -43,6 +43,13 @@ jobs:
           tags: europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncobackend:${{ github.ref_name }}
           build-args: |
             "GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+            
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./survival_ui
+          push: true
+          tags: europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncosurvivalui:${{ github.ref_name }}
 
   deploy-image:
     runs-on: ubuntu-latest
@@ -61,6 +68,8 @@ jobs:
           set -x
           sed -i 's/oncobackend:latest/oncobackend:${{ github.ref_name }}/g' ./.kubernetes/workload.yaml
           cat ./.kubernetes/workload.yaml
+          sed -i 's/oncosurvivalui:latest/oncosurvivalui:${{ github.ref_name }}/g' ./.kubernetes/workloadui.yaml
+          cat ./.kubernetes/workloadui.yaml
       
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
@@ -74,10 +83,16 @@ jobs:
           location: 'europe-west3'
 
       - name: 'apply workload'
-        run: 'kubectl apply -f ./.kubernetes/workload.yaml'
+        run: |
+          kubectl apply -f ./.kubernetes/workload.yaml
+          kubectl apply -f ./.kubernetes/workloadui.yaml
 
       - name: 'create service'
-        run: 'kubectl apply -f ./.kubernetes/service.yaml'
+        run: |
+          kubectl apply -f ./.kubernetes/service.yaml
+          kubectl apply -f ./.kubernetes/serviceui.yaml
       
       - name: "Roll out"
-        run: "kubectl rollout restart deployment/oncobackend"
+        run: |
+          kubectl rollout restart deployment/oncobackend
+          kubectl rollout restart deployment/oncosurvivalui
