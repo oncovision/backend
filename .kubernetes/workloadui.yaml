@@ -1,0 +1,44 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "oncosurvivalui"
+  namespace: "default"
+  labels:
+    app: "oncosurvivalui"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "oncosurvivalui"
+  template:
+    metadata:
+      labels:
+        app: "oncosurvivalui"
+    spec:
+      containers:
+      - name: "oncosurvivalui"
+        image: "europe-west3-docker.pkg.dev/solution-kit-11/oncovision/oncosurvivalui:latest"
+        imagePullPolicy: Always
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "oncosurvivalui-hpa"
+  namespace: "default"
+  labels:
+    app: "oncosurvivalui"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "oncosurvivalui"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
