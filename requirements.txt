@@ -8,3 +8,8 @@ pydantic
 python-multipart
 google-cloud-bigquery
 flask_cors
+pydicom
+matplotlib
+lifelines
+plotly
+opencv-python
