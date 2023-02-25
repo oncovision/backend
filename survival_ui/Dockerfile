@@ -9,7 +9,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     software-properties-common \
-    git \
+    git ffmpeg libsm6 libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
 # RUN git clone https://github.com/streamlit/streamlit-example.git.
