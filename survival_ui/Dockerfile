@@ -18,4 +18,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["streamlit", "run", "survival_app_integratedview.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "survival_app_integratedview.py", "--server.enableXsrfProtection=false", "--server.port=8501", "--server.address=0.0.0.0"]
