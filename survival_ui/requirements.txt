@@ -8,3 +8,7 @@ lifelines==0.27.4
 matplotlib==3.6.2
 matplotlib-inline==0.1.6
 pydicom
+matplotlib
+lifelines
+plotly
+opencv-python
