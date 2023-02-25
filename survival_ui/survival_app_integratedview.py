@@ -11,7 +11,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
 import numpy as np
-
+import pydicom
+import pydicom.data
+import cv2
+import base64
+from io import BytesIO, StringIO 
 
 st.set_page_config(layout="wide")
 
@@ -19,9 +23,14 @@ st.set_page_config(layout="wide")
 
 # img=cv2.imread("scientist.png",1)
 
-import base64
-from io import StringIO 
 
+
+def get_image_download_link(img,filename,text):
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    href =  f'<a href="data:file/txt;base64,{img_str}" download="{filename}">{text}</a>'
+    return href
 
 st.sidebar.markdown("<h2 align='center' style='color:#ff0000;'>OncoVision</h2>",unsafe_allow_html=True)
 st.markdown("<img src='https://www.persistent.com/wp-content/uploads/2021/04/Logo-variants-Logo-tagline.jpg' width='250' height='100' alt='me' align='right'>",unsafe_allow_html=True)
@@ -29,7 +38,7 @@ st.markdown("<img src='https://www.persistent.com/wp-content/uploads/2021/04/Log
 placeholder = st.empty()
 
 # Replace the placeholder with some text:
-placeholder.title("Minimal Residual Disease(MRD)  Monitoring")
+placeholder.title("Minimal Residual Disease(MRD)  Monitoring (Obtained from Integrated Analysis of Multi-Modal Data from a Cancer Patient)")
 
 # Replace the text with a chart:
 # placeholder.line_chart({"data": [1, 5, 2, 6]})
@@ -45,7 +54,7 @@ placeholder.title("Minimal Residual Disease(MRD)  Monitoring")
 
 option = st.sidebar.radio(
     'Please select an end user profile: ',
-    ('OncoClinician','Doctor', 'Bio Pharma Scientist'))
+    ('OncoClinician','Doctor', 'Bio Pharma Scientist', 'DICOM Viewer'))
 
 st.write('You selected:', option)
 
@@ -585,3 +594,53 @@ if option == 'Doctor':
             st.image(image2, caption='Pathology Image')
         else :
             st.write('Your uploaded File is not having Integrated Data')
+
+if option == 'DICOM Viewer':
+    uploaded_file = st.sidebar.file_uploader("Choose a file")
+    if uploaded_file is not None:
+        # To read file as bytes:
+        bytes_data = uploaded_file.getvalue()
+        # st.write(bytes_data)
+
+        # To convert to a string based IO:
+        stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+        # st.write(stringio)
+
+        # To read file as string:
+        string_data = stringio.read()
+        # st.write(string_data)
+
+
+
+        # Can be used wherever a "file-like" object is accepted:
+        st.write('You uploaded:', uploaded_file)
+        if "DICOM" in uploaded_file.name:
+            #sdas
+            df= pd.read_csv(uploaded_file)
+            df = df.dropna(axis=0)
+
+            for index, row in df.iterrows():
+                #radiologydata
+                pass_dicom = 'radiologicalImagesDICOM/' + row['Radiology Image'].strip(".dcm")  # file name is 1-12.dcm
+                print(pass_dicom)
+                pass_dicom = pass_dicom + ".dcm"
+                filename = pydicom.data.data_manager.get_files(pass_dicom)
+                print(filename)
+                ds = pydicom.dcmread(pass_dicom)
+                plt.imshow(ds.pixel_array, cmap=plt.cm.bone)  # set the color map to bone
+                filenamep = pass_dicom.strip(".dcm")
+                plt.savefig(filenamep + ".png")
+                image1 = Image.open(filenamep + ".png")
+                st.image(image1, caption=filenamep+".png")
+                img = cv2.imread(filenamep + ".png", cv2.IMREAD_COLOR)
+                ## Original image came from cv2 format, fromarray convert into PIL format
+                original_image = filenamep+".png"
+                result = Image.fromarray(img)
+                st.markdown(get_image_download_link(result,filenamep+".png",'Download '+filenamep+".png"), unsafe_allow_html=True)
+
+            #histologydata
+            #image2 = Image.open('pathologicalImages/'+df['Pathology Image'].head(1).values[0])
+            #st.image(image2, caption='Pathology Image')
+        else :
+            st.write('Your uploaded File is not having any DICOM image location to view.')
+
